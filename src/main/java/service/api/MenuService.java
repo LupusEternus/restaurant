@@ -31,7 +31,7 @@ public interface MenuService {
    * @param price
    * @return list of found meals
    */
-  List<Meal> findFoodCheaperThanPrice(List<Meal> meals, Integer price);
+  List<Meal> findFoodByName(List<Meal> meals, Integer price);
 
   /**
    * For a given List of meals return meals that have calorie intake between two values
@@ -47,7 +47,7 @@ public interface MenuService {
    * @param name - can be a partial String
    * @return list of found meals
    */
-  List<Meal> findFoodCheaperThanPrice(List<Meal> meals, String name);
+  List<Meal> findFoodByName(List<Meal> meals, String name);
 
 
   /**
