@@ -17,7 +17,6 @@ public class MenuServiceImpl implements MenuService {
         return meals.stream()
                 .filter(Objects::nonNull)
                 .filter(meal -> Objects.nonNull(meal.getDietType()) && meal.getDietType().equals(DietType.VEGETARIAN))
-                .filter(meal -> meal.getDietType().equals(DietType.VEGETARIAN))
                 .collect(Collectors.toList());
 
     }
