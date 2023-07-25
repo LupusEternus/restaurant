@@ -46,6 +46,7 @@ class MenuServiceImplTest {
     }
 
 
+
     @Test
     public void shouldNotFindVegetarianFood() {
 
@@ -68,6 +69,23 @@ class MenuServiceImplTest {
 
         Assertions.assertEquals(2,menu.findFoodByType(meals,DietType.REGULAR).size());
     }
+    @Test
+    public void shouldFindAlsoVeganWhenVegetarianIsDiet(){
+        vegeMeal_1.setDietType(DietType.VEGAN);
+        meals.add(vegeMeal_1);
+        meals.add(vegeMeal_2);
+        meals.add(regularMeal_1);
+        Assertions.assertEquals(2,menu.findFoodByType(meals,DietType.VEGETARIAN).size());
+    }
+    @Test
+    public void shouldFindVegan(){
+        vegeMeal_1.setDietType(DietType.VEGAN);
+        meals.add(vegeMeal_1);
+        meals.add(vegeMeal_2);
+        Assertions.assertEquals(1,menu.findFoodByType(meals,DietType.VEGAN).size());
+
+    }
+
     @Test
     public void shouldNotFindFoodByType(){
         meals.add(vegeMeal_1);
