@@ -6,7 +6,6 @@ import domain.eto.Meal;
 import domain.eto.Produce;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import service.exception.NoFoodFoundException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,7 @@ class MenuServiceImplTest {
     public void shouldFindVegetarianFood() {
 
         meals.add(createVegeMeal());
-        meals.add(createNonVegeMeal());
+        meals.add(createRegularMeal());
 
         Assertions.assertEquals(1, menu.findVegetarianFood(meals).size());
     }
@@ -32,7 +31,7 @@ class MenuServiceImplTest {
     @Test
     public void shouldNotFindVegetarianFood() {
 
-        meals.add(createNonVegeMeal());
+        meals.add(createRegularMeal());
         Assertions.assertTrue(menu.findVegetarianFood(meals).isEmpty());
 
     }
@@ -42,6 +41,54 @@ class MenuServiceImplTest {
         meals.add(createEmptyMeal());
         Assertions.assertEquals(0, menu.findVegetarianFood(meals).size());
     }
+
+    @Test
+    public void shouldFindFoodByType(){
+        meals.add(createVegeMeal());
+        meals.add(createRegularMeal());
+        meals.add(createRegularMeal());
+
+        Assertions.assertEquals(2,menu.findFoodByType(meals,DietType.REGULAR).size());
+    }
+    @Test
+    public void shouldNotFindFoodByType(){
+        meals.add(createVegeMeal());
+
+        Assertions.assertEquals(0,menu.findFoodByType(meals,DietType.REGULAR).size());
+    }
+
+    @Test
+    public void shouldFindFoodCheaperThan(){
+        Meal meal = createRegularMeal();
+        Meal meal1 = createRegularMeal();
+        Meal meal2 = createVegeMeal();
+        meal.setPrice(199);
+        meal1.setPrice(250);
+        meal2.setPrice(47);
+        meals.add(meal);
+        meals.add(meal1);
+        meals.add(meal2);
+        Integer topPrice = 200;
+
+        Assertions.assertEquals(2,menu.findFoodFoodCheaperThan(meals,topPrice).size());
+    }
+    @Test
+    public void shouldNotFindFoodCheaperThan(){
+
+        meals.add(createRegularMeal());
+        meals.add(createRegularMeal());
+        meals.add(createRegularMeal());
+        Integer topPrice = 1;
+        Assertions.assertTrue(menu.findFoodFoodCheaperThan(meals,topPrice).isEmpty());
+
+    }
+    @Test
+    public void shouldFindFoodWithCalories(){
+        fail();
+
+    }
+
+
 
 
     public Meal createVegeMeal() {
@@ -61,7 +108,7 @@ class MenuServiceImplTest {
         return new Meal();
     }
 
-    public Meal createNonVegeMeal() {
+    public Meal createRegularMeal() {
         Meal meal = new Meal();
         meal.setName("Chicken Wings");
         meal.setDietType(DietType.REGULAR);

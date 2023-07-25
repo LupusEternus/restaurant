@@ -31,14 +31,14 @@ public interface MenuService {
    * @param price
    * @return list of found meals
    */
-  List<Meal> findFoodByName(List<Meal> meals, Integer price);
+  List<Meal> findFoodFoodCheaperThan(List<Meal> meals, Integer price);
 
   /**
    * For a given List of meals return meals that have calorie intake between two values
    * @param meals
    * @return list of found meals
    */
-  List<Meal> findFoodCheaperWithCalories(List<Meal> meals, Integer minCalories, Integer maxCalories);
+  List<Meal> findFoodWithCalories(List<Meal> meals, Integer minCalories, Integer maxCalories);
 
   /**
    * For a given List of meals return meals that name starts with a String. This method ignores character case when
@@ -47,7 +47,7 @@ public interface MenuService {
    * @param name - can be a partial String
    * @return list of found meals
    */
-  List<Meal> findFoodByName(List<Meal> meals, String name);
+  List<Meal> findFoodFoodByName(List<Meal> meals, String name);
 
 
   /**
