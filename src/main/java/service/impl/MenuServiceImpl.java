@@ -47,7 +47,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Meal> findFoodFoodByName(List<Meal> meals, String name) {
+    public List<Meal> findFoodByName(List<Meal> meals, String name) {
         return meals.stream()
                 .filter(Objects::nonNull)
                 .filter(meal -> Objects.nonNull(meal.getName()))

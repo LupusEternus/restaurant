@@ -47,7 +47,7 @@ public interface MenuService {
    * @param name - can be a partial String
    * @return list of found meals
    */
-  List<Meal> findFoodFoodByName(List<Meal> meals, String name);
+  List<Meal> findFoodByName(List<Meal> meals, String name);
 
 
   /**
