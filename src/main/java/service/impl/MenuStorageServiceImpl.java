@@ -16,9 +16,8 @@ public class MenuStorageServiceImpl  extends MenuServiceImpl{
                 throw new NoFoodFoundException();
             }
             if(meal.getProducts().stream().noneMatch(Storage.CommonStorage::checkInStorage)){
-
+                throw new NoFoodFoundException();
             }
-
     }
 
     @Override
@@ -58,14 +57,14 @@ public class MenuStorageServiceImpl  extends MenuServiceImpl{
 
     @Override
     public List<Meal> findFoodContaining(List<Meal> meals, Produce product) {
-        List<Meal> list = findFoodContaining(meals, product);
+        List<Meal> list = super.findFoodContaining(meals, product);
         list.forEach(this::canMealBePreparedFromProductsInCommonStorage);
         return list;
     }
 
     @Override
     public List<Meal> findFoodExcludingAll(List<Meal> meals, List<Produce> products) {
-        List<Meal> list = findFoodExcludingAll(meals, products);
+        List<Meal> list = super.findFoodExcludingAll(meals, products);
         list.forEach(this::canMealBePreparedFromProductsInCommonStorage);
         return list;
     }
