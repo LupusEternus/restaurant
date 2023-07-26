@@ -11,8 +11,8 @@ import java.util.Objects;
 
 public class MenuStorageServiceImpl  extends MenuServiceImpl{
 
-    private void canMealBePreparedFromProductsInStorage(Meal meal, Storage storage){
-            if(Objects.isNull(meal) || Objects.isNull(storage)){
+    private void canMealBePreparedFromProductsInCommonStorage(Meal meal){
+            if(Objects.isNull(meal)){
                 throw new NoFoodFoundException();
             }
             if(meal.getProducts().stream().noneMatch(Storage.CommonStorage::checkInStorage)){
@@ -23,36 +23,50 @@ public class MenuStorageServiceImpl  extends MenuServiceImpl{
 
     @Override
     public List<Meal> findVegetarianFood(List<Meal> meals) {
-        return super.findVegetarianFood(meals);
+        List<Meal> list = super.findVegetarianFood(meals);
+        list.forEach(this::canMealBePreparedFromProductsInCommonStorage);
+        return list;
     }
 
     @Override
     public List<Meal> findFoodByType(List<Meal> meals, DietType diet) {
-        return super.findFoodByType(meals, diet);
+       List<Meal> list = super.findFoodByType(meals, diet);
+       list.forEach(this::canMealBePreparedFromProductsInCommonStorage);
+       return list;
     }
 
     @Override
     public List<Meal> findFoodFoodCheaperThan(List<Meal> meals, Integer price) {
-        return super.findFoodFoodCheaperThan(meals, price);
+        List<Meal> list = super.findFoodFoodCheaperThan(meals, price);
+        list.forEach(this::canMealBePreparedFromProductsInCommonStorage);
+        return list;
     }
 
     @Override
     public List<Meal> findFoodWithCalories(List<Meal> meals, Integer minCalories, Integer maxCalories) {
-        return super.findFoodWithCalories(meals, minCalories, maxCalories);
+        List<Meal> list = super.findFoodWithCalories(meals, minCalories, maxCalories);
+        list.forEach(this::canMealBePreparedFromProductsInCommonStorage);
+        return list;
     }
 
     @Override
     public List<Meal> findFoodByName(List<Meal> meals, String name) {
-        return super.findFoodByName(meals, name);
+        List<Meal> list = super.findFoodByName(meals, name);
+        list.forEach(this::canMealBePreparedFromProductsInCommonStorage);
+        return list;
     }
 
     @Override
     public List<Meal> findFoodContaining(List<Meal> meals, Produce product) {
-        return super.findFoodContaining(meals, product);
+        List<Meal> list = findFoodContaining(meals, product);
+        list.forEach(this::canMealBePreparedFromProductsInCommonStorage);
+        return list;
     }
 
     @Override
     public List<Meal> findFoodExcludingAll(List<Meal> meals, List<Produce> products) {
-        return super.findFoodExcludingAll(meals, products);
+        List<Meal> list = findFoodExcludingAll(meals, products);
+        list.forEach(this::canMealBePreparedFromProductsInCommonStorage);
+        return list;
     }
 }
