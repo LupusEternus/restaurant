@@ -12,20 +12,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-class MenuServiceImplTest {
+class MenuServiceImplTest implements TestsMethods {
 
     private final MenuServiceImpl menu = new MenuServiceImpl();
-    private  List<Meal> meals;
+    private List<Meal> meals;
     private Meal vegeMeal_1;
     private Meal regularMeal_1;
     private Meal vegeMeal_2;
     private Meal regularMeal_2;
 
 
-
-
     @BeforeEach
-    public void SetUp(){
+    public void SetUp() {
         meals = new ArrayList<>();
         vegeMeal_1 = createVegeMeal();
         vegeMeal_2 = createVegeMeal();
@@ -33,7 +31,6 @@ class MenuServiceImplTest {
         regularMeal_2 = createRegularMeal();
 
     }
-
 
 
     @Test
@@ -46,7 +43,6 @@ class MenuServiceImplTest {
     }
 
 
-
     @Test
     public void shouldNotFindVegetarianFood() {
 
@@ -56,45 +52,47 @@ class MenuServiceImplTest {
     }
 
     @Test
-    public void shouldReturnEmptyListWhenMealIsNull(){
+    public void shouldReturnEmptyListWhenMealIsNull() {
         meals.add(createEmptyMeal());
         Assertions.assertEquals(0, menu.findVegetarianFood(meals).size());
     }
 
     @Test
-    public void shouldFindFoodByType(){
+    public void shouldFindFoodByType() {
         meals.add(vegeMeal_1);
         meals.add(regularMeal_1);
         meals.add(regularMeal_2);
 
-        Assertions.assertEquals(2,menu.findFoodByType(meals,DietType.REGULAR).size());
+        Assertions.assertEquals(2, menu.findFoodByType(meals, DietType.REGULAR).size());
     }
+
     @Test
-    public void shouldFindAlsoVeganWhenVegetarianIsDiet(){
+    public void shouldFindAlsoVeganWhenVegetarianIsDiet() {
         vegeMeal_1.setDietType(DietType.VEGAN);
         meals.add(vegeMeal_1);
         meals.add(vegeMeal_2);
         meals.add(regularMeal_1);
-        Assertions.assertEquals(2,menu.findFoodByType(meals,DietType.VEGETARIAN).size());
+        Assertions.assertEquals(2, menu.findFoodByType(meals, DietType.VEGETARIAN).size());
     }
+
     @Test
-    public void shouldFindVegan(){
+    public void shouldFindVegan() {
         vegeMeal_1.setDietType(DietType.VEGAN);
         meals.add(vegeMeal_1);
         meals.add(vegeMeal_2);
-        Assertions.assertEquals(1,menu.findFoodByType(meals,DietType.VEGAN).size());
+        Assertions.assertEquals(1, menu.findFoodByType(meals, DietType.VEGAN).size());
 
     }
 
     @Test
-    public void shouldNotFindFoodByType(){
+    public void shouldNotFindFoodByType() {
         meals.add(vegeMeal_1);
 
-        Assertions.assertEquals(0,menu.findFoodByType(meals,DietType.REGULAR).size());
+        Assertions.assertEquals(0, menu.findFoodByType(meals, DietType.REGULAR).size());
     }
 
     @Test
-    public void shouldFindFoodCheaperThan(){
+    public void shouldFindFoodCheaperThan() {
 
         regularMeal_1.setPrice(199);
         regularMeal_2.setPrice(250);
@@ -104,20 +102,22 @@ class MenuServiceImplTest {
         meals.add(vegeMeal_1);
         Integer topPrice = 200;
 
-        Assertions.assertEquals(2,menu.findFoodFoodCheaperThan(meals,topPrice).size());
+        Assertions.assertEquals(2, menu.findFoodFoodCheaperThan(meals, topPrice).size());
     }
+
     @Test
-    public void shouldNotFindFoodCheaperThan(){
+    public void shouldNotFindFoodCheaperThan() {
 
         meals.add(regularMeal_1);
         meals.add(regularMeal_2);
         meals.add(vegeMeal_1);
         Integer topPrice = 1;
-        Assertions.assertTrue(menu.findFoodFoodCheaperThan(meals,topPrice).isEmpty());
+        Assertions.assertTrue(menu.findFoodFoodCheaperThan(meals, topPrice).isEmpty());
 
     }
+
     @Test
-    public void shouldFindFoodWithCalories(){
+    public void shouldFindFoodWithCalories() {
         regularMeal_1.setCalories(350);
         regularMeal_2.setCalories(500);
         vegeMeal_1.setCalories(250);
@@ -127,11 +127,12 @@ class MenuServiceImplTest {
         meals.add(vegeMeal_1);
         meals.add(vegeMeal_2);
 
-        Assertions.assertEquals(2,menu.findFoodWithCalories(meals,130,400).size());
+        Assertions.assertEquals(2, menu.findFoodWithCalories(meals, 130, 400).size());
 
     }
+
     @Test
-    public void shouldNotFindFoodWithCalories(){
+    public void shouldNotFindFoodWithCalories() {
         regularMeal_1.setCalories(350);
         regularMeal_2.setCalories(500);
         vegeMeal_1.setCalories(250);
@@ -141,115 +142,62 @@ class MenuServiceImplTest {
         meals.add(vegeMeal_1);
         meals.add(vegeMeal_2);
 
-        Assertions.assertEquals(0,menu.findFoodWithCalories(meals,0,100).size());
+        Assertions.assertEquals(0, menu.findFoodWithCalories(meals, 0, 100).size());
 
     }
 
     @Test
-    public void shouldFindFoodByNameWithExactlySameName(){
+    public void shouldFindFoodByNameWithExactlySameName() {
         String foodName = "Salad";
         meals.add(regularMeal_1);
         meals.add(vegeMeal_1);
-        Assertions.assertEquals(1,menu.findFoodByName(meals,foodName).size());
+        Assertions.assertEquals(1, menu.findFoodByName(meals, foodName).size());
     }
+
     @Test
-    public void shouldFindFoodByNameWithCaseDifference(){
+    public void shouldFindFoodByNameWithCaseDifference() {
         String foodName = "salad";
         vegeMeal_2.setName("Salad With Beans");
         meals.add(vegeMeal_2);
         meals.add(vegeMeal_1);
-        Assertions.assertEquals(2,menu.findFoodByName(meals,foodName).size());
+        Assertions.assertEquals(2, menu.findFoodByName(meals, foodName).size());
     }
+
     @Test
-    public void shouldFindFoodContaining(){
+    public void shouldFindFoodContaining() {
 
         regularMeal_1.getProducts().add(createChicken());
         meals.add(regularMeal_1);
-        Assertions.assertEquals(1,menu.findFoodContaining(meals,createChicken()).size());
+        Assertions.assertEquals(1, menu.findFoodContaining(meals, createChicken()).size());
     }
+
     @Test
-    public void shouldNotFindFoodContaining(){
+    public void shouldNotFindFoodContaining() {
 
         meals.add(regularMeal_1);
-        Assertions.assertEquals(1,menu.findFoodContaining(meals,createChicken()).size());
+        Assertions.assertEquals(1, menu.findFoodContaining(meals, createChicken()).size());
     }
+
     @Test
-    public void shouldFindFoodExcludingAll(){
+    public void shouldFindFoodExcludingAll() {
         meals.add(regularMeal_1);
         meals.add(vegeMeal_1);
         List<Produce> produces = new ArrayList<>();
         produces.add(createVegetable("Beans"));
         produces.add(createVegetable("Carrot"));
 
-        Assertions.assertEquals(2,menu.findFoodExcludingAll(meals,produces).size());
+        Assertions.assertEquals(2, menu.findFoodExcludingAll(meals, produces).size());
     }
 
     @Test
-    public void shouldNotFindFoodExcludingAll(){
+    public void shouldNotFindFoodExcludingAll() {
         meals.add(regularMeal_1);
         meals.add(vegeMeal_1);
         List<Produce> produces = new ArrayList<>();
         produces.add(createVegetable("Onion"));
         produces.add(createEgg());
 
-        Assertions.assertEquals(0,menu.findFoodExcludingAll(meals,produces).size());
+        Assertions.assertEquals(0, menu.findFoodExcludingAll(meals, produces).size());
     }
-
-
-
-
-
-
-    public Meal createVegeMeal() {
-        Meal meal = new Meal();
-        meal.setName("Salad");
-        meal.setDietType(DietType.VEGETARIAN);
-        meal.setCalories(100);
-        meal.setPrice(20);
-        List<Produce> produces = new ArrayList<>();
-        produces.add(createVegetable("Onion"));
-        produces.add((createVegetable("Tomato")));
-        meal.setProducts(produces);
-        return meal;
-    }
-    public Meal createEmptyMeal() {
-
-        return new Meal();
-    }
-
-    public Meal createRegularMeal() {
-        Meal meal = new Meal();
-        meal.setName("Chicken Wings");
-        meal.setDietType(DietType.REGULAR);
-        meal.setCalories(250);
-        meal.setPrice(50);
-        List<Produce> produces = new ArrayList<>();
-        produces.add(createChicken());
-        produces.add(createEgg());
-        meal.setProducts(produces);
-        return meal;
-    }
-
-    public Produce createChicken() {
-        Produce produce = new Produce();
-        produce.setName("Chicken");
-        produce.setProductType(ProductType.MEAT);
-        return produce;
-    }
-
-    public Produce createEgg() {
-        Produce produce = new Produce();
-        produce.setName("Egg");
-        produce.setProductType(ProductType.EGGS);
-        return produce;
-    }
-
-    public Produce createVegetable(String name) {
-        Produce produce = new Produce();
-        produce.setName(name);
-        produce.setProductType(ProductType.PLANT_BASED);
-        return produce;
-    }
-
 
 }
