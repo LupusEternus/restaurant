@@ -15,7 +15,7 @@ public class MenuStorageServiceImpl  extends MenuServiceImpl{
             if(Objects.isNull(meal)){
                 throw new NoFoodFoundException();
             }
-            if(meal.getProducts().stream().noneMatch(Storage.CommonStorage::checkInStorage)){
+            if(meal.getProducts().stream().anyMatch(produce -> !Storage.CommonStorage.checkInStorage(produce))){
                 throw new NoFoodFoundException();
             }
     }

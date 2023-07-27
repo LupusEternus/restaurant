@@ -1,7 +1,6 @@
 package service.impl;
 
 import domain.DietType;
-import domain.ProductType;
 import domain.eto.Meal;
 import domain.eto.Produce;
 import org.junit.jupiter.api.Assertions;
@@ -25,8 +24,8 @@ class MenuServiceImplTest implements TestsMethods {
     @BeforeEach
     public void SetUp() {
         meals = new ArrayList<>();
-        vegeMeal_1 = createVegeMeal();
-        vegeMeal_2 = createVegeMeal();
+        vegeMeal_1 = createVegetarianMeal();
+        vegeMeal_2 = createVegetarianMeal();
         regularMeal_1 = createRegularMeal();
         regularMeal_2 = createRegularMeal();
 

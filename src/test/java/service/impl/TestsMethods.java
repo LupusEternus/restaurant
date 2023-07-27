@@ -12,7 +12,7 @@ public interface TestsMethods {
 
     //Helper methods
 
-    public default Meal createVegeMeal() {
+    public default Meal createVegetarianMeal() {
         Meal meal = new Meal();
         meal.setName("Salad");
         meal.setDietType(DietType.VEGETARIAN);
@@ -20,6 +20,18 @@ public interface TestsMethods {
         meal.setPrice(20);
         List<Produce> produces = new ArrayList<>();
         produces.add(createVegetable("Onion"));
+        produces.add((createVegetable("Tomato")));
+        meal.setProducts(produces);
+        return meal;
+    }
+    public default Meal createVeganMeal() {
+        Meal meal = new Meal();
+        meal.setName("Salad");
+        meal.setDietType(DietType.VEGAN);
+        meal.setCalories(50);
+        meal.setPrice(25);
+        List<Produce> produces = new ArrayList<>();
+        produces.add(createVegetable("Apple"));
         produces.add((createVegetable("Tomato")));
         meal.setProducts(produces);
         return meal;

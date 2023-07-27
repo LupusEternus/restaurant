@@ -52,9 +52,6 @@ public class Storage {
         public static void removeFromStorage(Produce produce,Integer quantity){
             if(storage.inventory.containsKey(produce) && storage.inventory.get(produce) >= quantity){
                 storage.inventory.put(produce,storage.inventory.get(produce) - quantity);
-            } else if (storage.inventory.containsKey(produce)) {
-                storage.inventory.put(produce,0);
-
             }else {
                 throw new NoFoodFoundException();
             }
