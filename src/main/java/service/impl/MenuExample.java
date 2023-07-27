@@ -5,7 +5,7 @@ import java.util.List;
 
 import domain.DietType;
 import domain.eto.Meal;
-import service.api.MenuService;
+
 import service.exception.NoFoodFoundException;
 
 /**
@@ -21,7 +21,10 @@ public class MenuExample {
    */
   public List<Meal> findVegetarianFood(List<Meal> meals) {
     //This is an example
-    List<Meal> filteredMeals = new ArrayList<Meal>(); // initialize array
+    if(meals == null){
+      throw new IllegalArgumentException();
+    }
+    List<Meal> filteredMeals = new ArrayList<>(); // initialize array
     for (Meal meal : meals) { //create for loop
       // create if condition to handle nulls
       if(meal != null){

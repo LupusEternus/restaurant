@@ -78,7 +78,7 @@ class MenuExampleTest {
     // when
     // then
     //HINT: When checking for exceptions, when and then are usually written in one method call
-    Assertions.assertThrows(NoFoodFoundException.class, ()->
+    Assertions.assertThrows(IllegalArgumentException.class, ()->
         menuExample.findVegetarianFood(meals));
   }
 
